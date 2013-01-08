@@ -8,11 +8,10 @@
 	      google.earth.createInstance('maps', initCallback, failureCallback);
 
 	      addSampleUIHtml(
-	        '<input id="location" type="text" value="" placeholder="Place to go..."/> <a href="#" id="adv">Advance</a> '
+	        '<input id="location" type="text" value="" placeholder="Place to go..."/>'
 	      );
 
-	      addSampleButton('GO!', buttonClick);
-
+	      addSampleButton();
 		}
 
 	    function initCallback(instance) 
@@ -54,18 +53,18 @@
 
 							/// Create the placemark.
 							var placemark = ge.createPlacemark('');
-							placemark.setName(title);
+
 							
 							if(text.indexOf("Text:") == 1)
 							{
 								var mytextSplit2 = text.split("Text:");
-								placemark.setDescription('<div id="crimeInfo">'+mytextSplit2[0]+'</div>');	
+								placemark.setDescription('<div id="crimeInfo"><h5>'+title+'</h5>'+mytextSplit2[0]+'</div>');	
 	
 							}
 							else
 							{
 								var mytextSplit = text.split("Publicerad:");
-								placemark.setDescription('<div id="crimeInfo">'+mytextSplit[0]+'</div>');
+								placemark.setDescription('<div id="crimeInfo"><h5>'+title+'</h5>'+mytextSplit[0]+'</div>');
 
 							}
 							// Define a custom icon.
@@ -112,41 +111,31 @@
 				}
 			});
 			
-				      $.ajaxSetup({
-				url : "/source/englandXML.json",
-				type : "get",
+			if(localStorage.lol != null && localStorage.lol2 != null)
+		  	{
+		  		$(".tutorial").hide();
+			  	$(".extra").prepend("<div id='moreInfo'></div>");
+			    $('#moreInfo').hide();
+			    $("#moreInfo").append(localStorage.lol);
+			    $('#moreInfo').show('slow');
+			    
+			    var locations = localStorage.lol2.split('|');
+			    
+			    latCon = parseFloat(locations[0]);
+				lngCon = parseFloat(locations[1]);
+			    
+			    var geocodeLocation = document.getElementById('location').value;
+	
+			      var geocoder = new google.maps.ClientGeocoder();
+			      geocoder.getLatLng(geocodeLocation, function() {
+			          var lookAt = ge.createLookAt('');
+			          lookAt.set(latCon, lngCon, 10, ge.ALTITUDE_RELATIVE_TO_GROUND,
+			                     0, 10, 20000);
+			          ge.getView().setAbstractView(lookAt);
+			        
+			     });
 
-				headers : {
-					"Accept" : "application/xml",
-					"Content-type" : "application/x-www-form-urlencoded"
-				}
-			});
-
-			$.ajax({
-				success : function(data) {
-					var obj = jQuery.parseJSON(data);
-					$.each(obj, function(i, obj) {
-						var id = obj.location.street.id;
-					    var lat = obj.location.latitude
-					    var lng = obj.location.longitude
-					    var title = obj.category.substr(0, 1).toUpperCase();
-					    title += $(this).find('title').text().substr(1).toLowerCase();
-					    var date = obj.month;
-					    var place = obj.location.name;
-					    
-					    latCon = parseFloat(lat);
-						lngCon = parseFloat(lng);
-					    
-					    
-					});
-				
-				    	
-				},
-				error : function(object, error) {
-					console.log(error);
-				}
-			});
-
+		  	}
 	    }
 
 		function failureCallback(errorCode) 
@@ -159,19 +148,9 @@
 		 	document.getElementById('sample-ui').innerHTML += html;
 		}
 
-		function addSampleButton(caption, clickHandler) 
+		function addSampleButton() 
 		{
-	        var btn = document.createElement('input');
-	        btn.type = 'button';
-	        btn.value = caption;
-
-	        if (btn.attachEvent)
-	          btn.attachEvent('onclick', clickHandler);
-	        else
-	          btn.addEventListener('click', clickHandler, false);
-
-	        // add the button to the Sample UI
-	        document.getElementById('sample-ui').appendChild(btn);
+	        $('#sample-ui').append('<button type="button" onclick="buttonClick();" class="btn btn-primary">Find</button>');
 		 }
 
 		 function buttonClick() 
@@ -189,7 +168,8 @@
 		      });
 	     }
 	     function moreInfo(id)
-	     { 
+	     {
+	     	$('#moreInfo').remove();
 	     	$.get("/source/swedenXML.xml", function(data){
 				$(data).find('event').each (function()
 		     	{
@@ -216,17 +196,40 @@
 							var mytextSplit = text.split("Publicerad:");
 							text = mytextSplit[0];
 						}
-					    $(".hero-unit").prepend("<div id='moreInfo'></div>");
+					    $(".extra").prepend("<div id='moreInfo'></div>");
 					    $('#moreInfo').hide();
 					    $("#moreInfo").append("<h3>"+title+"</h3>");
-					    $("#moreInfo").append("<p><img src='http://cdn3.iconfinder.com/data/icons/token/Token,%20128x128,%20PNG/Clock-Time.png' width='30px;'>"+date+' '+place+"<img src='http://cdn4.iconfinder.com/data/icons/Mobile-Icons/128/04_maps.png' width='20px;'>"+lat+' '+lng+"</p>");
-					    $("#moreInfo").append("<p></p>");
-					    $("#moreInfo").append("<p>"+text+"</p>");
-					    $("#moreInfo").append("<p> Source: <a href='"+link+"'>"+link+"</a></p>");
-					    
+					    $("#moreInfo").append("<hr/>");
+					    $("#moreInfo").append("<p class='timeposition'><img  src='http://cdn3.iconfinder.com/data/icons/token/Token,%20128x128,%20PNG/Clock-Time.png' id='clockIcon'>"+date+' '+place+"<img id='mapIcon' src='http://cdn4.iconfinder.com/data/icons/Mobile-Icons/128/04_maps.png'> <b>"+lat+' | '+lng+"</b></p>");
+					    $("#moreInfo").append("<div id='brodtext'>"+text+"</div>");
+					    $("#moreInfo").append("<p class='infoPics'><hr/><a onclick='postToFeed();' href='#'><img src='./img/fb.png' width='100px'></img></a><img class='tw' src='./img/tw.png' width='75px'> </img><a href='"+link+"'><img class='polis' src='./img/polisen.png' width='100px'></img></a><a href='#' onclick='closeFunc();' class='closeButton btn btn-danger'>Stäng</a></p>")
+					    $("#moreInfo").append("")
+					    $(".tutorial").hide('slow');
 					    $("#moreInfo").show('slow');
+					    
+					    
 	        		}
 				});
 			});
+
 		 }
+		 function closeFunc()
+		 {
+		  	$('#moreInfo').hide('slow', function()
+		  	{ 
+		  		$('#moreInfo').remove();
+		  		$(".tutorial").show('slow');
+		  	});
+		 }
+		 $(window).unload( function() 
+		 {  
+		 	var lol = $('#moreInfo').html();
+		 	var lol2 = $('#moreInfo').find('b').text();
+		 	if(lol != null)
+		 	{
+		 		localStorage.setItem("lol", lol);
+		 		localStorage.setItem("lol2", lol2);
+		 	}
+		 });
+		 
 

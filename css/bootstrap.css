@@ -6041,3 +6041,93 @@ a.badge:hover {
     width: 250px;
     font-size: 12px;
 }
+#moreInfo{
+    width: 650px;
+    margin: 0px auto;
+}
+#moreInfo h3{
+
+}
+#clockIcon{
+   padding-right: 5px;
+   width: 40px;
+}
+#mapIcon{
+    padding-right: 5px;
+    width: 40px;
+    margin-left: 10px;
+}
+.timeposition b{
+    font-size: 16px;
+    font-weight:normal; 
+}
+.timeposition{
+    font-size: 16px;
+    font-weight:normal; 
+}
+#brodtext{
+    width: 550px;
+    margin: 0px auto;
+}
+#brodtext p{
+    color: gray;
+    font-style: italic;
+    
+}
+.polis{
+    width: 8%;
+}
+.infoPics{
+    margin-left:25px;
+}
+.row
+{
+    font-size: 19px;
+}
+.row img
+{
+    margin-right: 20px;
+}
+.row #location
+{
+    margin-top: 10px;
+}
+.btn-primary{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+.btn-danger{
+    margin-left:300px;
+}
+.tw{
+    margin-right: 15px;
+    width: 75px;
+}
+.mapHolder{
+    background-color: #000000;
+}
+#maps
+{
+    margin-left:30px;
+}
+.sp{
+    height: 20px;
+}
+.tutorial{
+    width: 400px;
+    margin: 0px auto;
+}
+#fb-root{
+    width: 250px;
+    color: #0088cc;
+}
+#fb-root p{
+    padding-top: 10px;
+
+    color: #0088cc;
+}
+#fb-root img{
+    margin-top: 5px;
+    float: left;
+    margin-right: 10px;
+}

@@ -28,19 +28,21 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" mref="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    <link rel="shortcut icon" href="./img/eye.png">
   </head>
   	<?php
+
 	
-		$xml = file_get_contents('http://brottsplatskartan.se/api.php?action=getEvents&period=1440');
+		$xml = file_get_contents('http://brottsplatskartan.se/api.php?action=getEvents&period=2880');
 		$json = file_get_contents('http://policeapi2.rkh.co.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2012-11');
 		
 		file_put_contents('./source/englandXML.json', $json);
 		file_put_contents('./source/swedenXML.xml', $xml);
 		
+
+		
 	?>
   <body onload="init()">
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -49,15 +51,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Globe News</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
+          
+          <div class="nav-collapse">
+              <a class="row" id="sample-ui" href="#">Globe News<img src="./img/eye.png" width="5%" /></a>
+              
             <form class="navbar-form pull-right">
-            	<img src="./img/123.png" width="200px"></img>
+            	<div id="fb-root"></div>
             </form>
           </div><!--/.nav-collapse -->
         </div>
@@ -66,12 +65,17 @@
 
     <div class="container">
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit ">
+      <div class="sp"></div>
+      <div class="extra"></div>
+      <div class="tutorial">
       	<div class="row">
-      		
-      	   <div id="sample-ui"></div>
-	       <div id="maps" style="height: 600px; width: 1114px;"></div>
-	       
+      		<h2>Color explanation...</h2><img src="./img/tut2.png"/>
+      	</div>
+      	
+      </div>
+      <div class="hero-unit mapHolder">
+      	<div class="row">
+	       <div id="maps" style="height: 600px; max-width: 1114px;"></div>
        </div>
      </div>
     </div> <!-- /container -->
@@ -91,7 +95,8 @@
     <script src="./js/bootstrap-collapse.js"></script>
     <script src="./js/bootstrap-carousel.js"></script>
     <script src="./js/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="https://www.google.com/jsapi"></script>
 	<script src="./js/GoogleEarth.js"></script>
+	<script src="./js/Facebook.js"></script>
   </body>
 </html>
