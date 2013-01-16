@@ -26,10 +26,10 @@
 	            }
         	});
 		  } else if (response.status === 'not_authorized') {
-		     FB.login();
+		  	 $('#fb-root').append('<a href="#" onclick="FB.login();"><img src="./img/fbicon.gif" /></a>');
+
 		  } else {
-		  	 $('#fb-root').append('<fb:login-button onclick="FB.login();"></fb:login-button>');
-		     
+		  	 $('#fb-root').append('<a href="#" onclick="FB.login();"><img src="./img/fbicon.gif" /></a>');
 		  }
 		 });
 			

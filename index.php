@@ -32,17 +32,12 @@
   </head>
   	<?php
 
-	
 		$xml = file_get_contents('http://brottsplatskartan.se/api.php?action=getEvents&period=2880');
-		$json = file_get_contents('http://policeapi2.rkh.co.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2012-11');
 		
-		file_put_contents('./source/englandXML.json', $json);
 		file_put_contents('./source/swedenXML.xml', $xml);
 		
-
-		
 	?>
-  <body onload="init()">
+  <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -96,6 +91,11 @@
     <script src="./js/bootstrap-carousel.js"></script>
     <script src="./js/bootstrap-typeahead.js"></script>
 	<script src="https://www.google.com/jsapi"></script>
+	<script>
+	$(document).ready(function() {
+		init();
+	});
+	</script>
 	<script src="./js/GoogleEarth.js"></script>
 	<script src="./js/Facebook.js"></script>
   </body>

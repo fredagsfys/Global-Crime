@@ -111,13 +111,15 @@
 				}
 			});
 			
+			localStorageCall();
+	    }
+		function localStorageCall()
+		{
 			if(localStorage.lol != null && localStorage.lol2 != null)
 		  	{
 		  		$(".tutorial").hide();
 			  	$(".extra").prepend("<div id='moreInfo'></div>");
-			    $('#moreInfo').hide();
 			    $("#moreInfo").append(localStorage.lol);
-			    $('#moreInfo').show('slow');
 			    
 			    var locations = localStorage.lol2.split('|');
 			    
@@ -136,8 +138,7 @@
 			     });
 
 		  	}
-	    }
-
+		}
 		function failureCallback(errorCode) 
 		{
 
