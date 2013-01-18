@@ -31,11 +31,16 @@
     <link rel="shortcut icon" href="./img/eye.png">
   </head>
   	<?php
-
+		$msg = "One or more API's are not avalible, the current information might not be up to date."
 		$xml = file_get_contents('http://brottsplatskartan.se/api.php?action=getEvents&period=2880');
-		
-		file_put_contents('./source/swedenXML.xml', $xml);
-		
+		if($xml == null)
+		{
+			echo '<script type="text/javascript">alert("' . $msg . '"); </script>';	
+		}
+		else
+		{
+			file_put_contents('./source/swedenXML.xml', $xml);	
+		}				
 	?>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
